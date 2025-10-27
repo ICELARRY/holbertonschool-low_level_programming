@@ -3,35 +3,60 @@
 #include "dog.h"
 
 /**
- * new_dog - creates a new dog_t
- * @name: name of the dog
- * @age: age of the dog
- * @owner: owner of the dog
- *
- * Return: pointer to the new dog_t, or NULL on failure
+ * _strlen - hesablayır string uzunluğunu
+ */
+int _strlen(char *s)
+{
+    int i = 0;
+    while (s[i])
+        i++;
+    return (i);
+}
+
+/**
+ * _strcpy - stringi kopyalayır
+ */
+char *_strcpy(char *dest, char *src)
+{
+    int i;
+    for (i = 0; src[i]; i++)
+        dest[i] = src[i];
+    dest[i] = '\0';
+    return (dest);
+}
+
+/**
+ * new_dog - yeni dog_t strukturunu yaradır
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-    dog_t *dog;
-    char *name_copy, *owner_copy;
+    dog_t *d;
 
-    dog = malloc(sizeof(dog_t));
-    if (dog == NULL)
+    if (!name || age < 0 || !owner)
         return (NULL);
 
-    name_copy = strdup(name);
-    owner_copy = strdup(owner);
-    if (name_copy == NULL || owner_copy == NULL)
+    d = malloc(sizeof(dog_t));
+    if (!d)
+        return (NULL);
+
+    d->name = malloc(sizeof(char) * (_strlen(name) + 1));
+    if (!d->name)
     {
-        free(name_copy);
-        free(owner_copy);
-        free(dog);
+        free(d);
         return (NULL);
     }
+    _strcpy(d->name, name);
 
-    dog->name = name_copy;
-    dog->age = age;
-    dog->owner = owner_copy;
+    d->owner = malloc(sizeof(char) * (_strlen(owner) + 1));
+    if (!d->owner)
+    {
+        free(d->name);
+        free(d);
+        return (NULL);
+    }
+    _strcpy(d->owner, owner);
 
-    return (dog);
+    d->age = age;
+
+    return (d);
 }
