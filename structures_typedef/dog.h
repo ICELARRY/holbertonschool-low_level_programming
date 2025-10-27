@@ -2,19 +2,21 @@
 #define DOG_H
 
 /**
- * struct dog - dog info
- * @name: dog name
- * @age: dog age
- * @owner: dog owner
+ * struct dog - a dog's basic info
+ * @name: name of the dog
+ * @age: age of the dog
+ * @owner: owner of the dog
+ *
+ * Description: struct to store dog info
  */
 struct dog
 {
-    char *name;
-    float age;
-    char *owner;
+	char *name;
+	float age;
+	char *owner;
 };
 
 void init_dog(struct dog *d, char *name, float age, char *owner);
-void print_dog(struct dog *d);  /* <-- Bu sətri əlavə edin */
+void print_dog(struct dog *d);
 
 #endif /* DOG_H */
