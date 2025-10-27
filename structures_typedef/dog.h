@@ -2,21 +2,19 @@
 #define DOG_H
 
 /**
- * struct dog - a dog's basic info
+ * struct dog - Dog structure
  * @name: name of the dog
  * @age: age of the dog
  * @owner: owner of the dog
- *
- * Description: struct to store dog info
  */
 typedef struct dog
 {
-	char *name;
-	float age;
-	char *owner;
+    char *name;
+    float age;
+    char *owner;
 } dog_t;
 
-void init_dog(dog_t *d, char *name, float age, char *owner);
-void print_dog(dog_t *d);
+/* Prototype for new_dog function */
+dog_t *new_dog(char *name, float age, char *owner);
 
 #endif /* DOG_H */
