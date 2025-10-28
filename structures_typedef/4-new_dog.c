@@ -1,62 +1,78 @@
 #include <stdlib.h>
-#include <string.h>
 #include "dog.h"
 
 /**
- * _strlen - hesablayır string uzunluğunu
+ * _strlen - returns length of a string
+ * @s: the string
+ * Return: length
  */
 int _strlen(char *s)
 {
-    int i = 0;
-    while (s[i])
-        i++;
-    return (i);
+	int len = 0;
+
+	while (s && s[len])
+		len++;
+	return (len);
 }
 
 /**
- * _strcpy - stringi kopyalayır
+ * _strcpy - copies a string
+ * @dest: destination
+ * @src: source
+ * Return: pointer to dest
  */
 char *_strcpy(char *dest, char *src)
 {
-    int i;
-    for (i = 0; src[i]; i++)
-        dest[i] = src[i];
-    dest[i] = '\0';
-    return (dest);
+	int i = 0;
+
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
 /**
- * new_dog - yeni dog_t strukturunu yaradır
+ * new_dog - creates a new dog
+ * @name: dog's name
+ * @age: dog's age
+ * @owner: dog's owner
+ * Return: pointer to new dog_t, or NULL on failure
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-    dog_t *d;
+	dog_t *d;
+	char *name_copy, *owner_copy;
 
-    if (!name || age < 0 || !owner)
-        return (NULL);
+	if (!name || !owner)
+		return (NULL);
 
-    d = malloc(sizeof(dog_t));
-    if (!d)
-        return (NULL);
+	d = malloc(sizeof(dog_t));
+	if (!d)
+		return (NULL);
 
-    d->name = malloc(sizeof(char) * (_strlen(name) + 1));
-    if (!d->name)
-    {
-        free(d);
-        return (NULL);
-    }
-    _strcpy(d->name, name);
+	name_copy = malloc(_strlen(name) + 1);
+	if (!name_copy)
+	{
+		free(d);
+		return (NULL);
+	}
+	owner_copy = malloc(_strlen(owner) + 1);
+	if (!owner_copy)
+	{
+		free(name_copy);
+		free(d);
+		return (NULL);
+	}
 
-    d->owner = malloc(sizeof(char) * (_strlen(owner) + 1));
-    if (!d->owner)
-    {
-        free(d->name);
-        free(d);
-        return (NULL);
-    }
-    _strcpy(d->owner, owner);
+	_strcpy(name_copy, name);
+	_strcpy(owner_copy, owner);
 
-    d->age = age;
+	d->name = name_copy;
+	d->age = age;
+	d->owner = owner_copy;
 
-    return (d);
+	return (d);
 }
